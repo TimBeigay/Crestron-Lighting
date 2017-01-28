@@ -1,0 +1,131 @@
+Crestron Lighting Control
+=========================
+
+
+General Description:
+==================== 
+
+  This umc module provides the ability to interact with and manipulate up to 25 lighting loads for a room.  The loads
+  are divided into 5 groups, with 5 loads in each group.  Each load within the group is associated with a position 1-5.
+  Only one group at a time is accessible for display. You have the ability to cycle forward and backward through the groups.
+  A name can manually be associated to each load.  Depending on how many loads exist within a group, a corresponding
+  subpage output signal is driven high. These output signals should be tied to subpages that will respectively display
+  either 1, 2, 3, 4, or 5 sets of load controls (On/Raise/Lower/Off & analog fb) respectively. 
+
+
+Important Information
+======================= 
+
+  Input/Output Type Key:
+  - (D) Digital
+  - (A) Analog
+  - (S) Serial
+
+
+
+  INPUT Description
+  -----------------
+  - Reset_To_First_Load_Group            (D) Used to reset module back to first load group.
+  - Previous_Load_Group                  (D) Used to go back to previous group.
+  - Next_Load_Group                      (D) User to advance to next group.
+
+    The following inputs apply to each load position (1-5) of the currently active group.  There is a set per load position.
+  - PosX_Load_Full_On                    (D) Used to turn load level X on to 100% in active group.
+  - PosX_Load_Raise                      (D) Used to increase the level of load X in active group.
+  - PosX_Load_Lower                      (D) Used to decrease the level of load X in active group.
+  - PosX_Load_Full_Off                   (D) Used to turn load level X off in active group.
+
+    The following inputs apply to the loads in each of the 5 possible groups.  These are typically tied to signals from 
+    from lighting RSDs. 
+  - Group1_PosX_Load_Current_Level       (A) Current level for each load X (1-5) respectively in Group 1.
+  - Group2_PosX_Load_Current_Level       (A) Current level for each load X (1-5) respectively in Group 2.
+  - Group3_PosX_Load_Current_Level       (A) Current level for each load X (1-5) respectively in Group 3.
+  - Group4_PosX_Load_Current_Level       (A) Current level for each load X (1-5) respectively in Group 4.
+  - Group5_PosX_Load_Current_Level       (A) Current level for each load X (1-5) respectively in Group 5.
+
+    The following inputs apply to lighting scenes.
+  - SceneX_Select                        (D) Used to select custom scene 1-4 respectively for a room.
+  - SceneAllOn_Select                    (D) Used to select scene All On for a room.
+  - SceneAllOff_Select                   (D) Used to select scene All Off for a room.
+  - SceneRaise_Select                    (D) Used to select scene All Raise for a room.
+  - SceneLower_Select                    (D) Used to select scene All Lower for a room.
+
+  
+
+  OUTPUT Description
+  ------------------
+  - Show_PosX-X_Subpage_Fb               (D) Corresponding signal will be driven high depending on how many loads exist in
+                                          the currently active group. Only one signal will be high at a time.
+
+  - Show_Both_Previous/Next_Buttons_Fb   (D) These signals can be used to display the <- and -> arrow buttons for moving 
+  - Show_Previous_Button_FB              (D) through groups. Necssary if more than one group exists. Use the "Both" signal
+  - Show_Next_Button_Fb                  (D) if endless cycling is desired. Otherwise the other signals will only be high
+                                          depending on what group position is active.
+
+    The follow outputs apply to each load (1-5) rspectively of the currently active group.
+  - PosX_Load_Current_Level              (A) Feedback level for currently displayed load at each position X in active group.
+  - PosX_Load_Name$                      (S) Name for currently displayed load at each position X in active group.
+
+    The following outputs apply to the loads in each of the 5 possible groups.
+    These are typically tied to signals from lighting RSDs. 
+  - Group1_PosX_Load_Full_On             (D) Used to turn each load X (1-5) respectively on to 100% in Group 1.
+  - Group1_PosX_Load_Raise               (D) Used to increase each load X (1-5) respectively in Group 1.
+  - Group1_PosX_Load_Lower               (D) Used to decrease each load X (1-5) respectively in Group 1.
+  - Group1_PosX_Load_Full_Off            (D) Used to turn off each load X (1-5) respectively in Group 1.
+  - Group1_PosX_Load_Set_Level           (A) Set the level for each load X (1-5) respectively in Group 1.
+
+  - Group2_PosX_Load_Full_On             (D) Used to turn each load X (1-5) respectively on to 100% in Group 2.
+  - Group2_PosX_Load_Raise               (D) Used to increase each load X (1-5) respectively in Group 2.
+  - Group2_PosX_Load_Lower               (D) Used to decrease each load X (1-5) respectively in Group 2.
+  - Group2_PosX_Load_Full_Off            (D) Used to turn off each load X (1-5) respectively in Group 2.
+  - Group2_PosX_Load_Set_Level           (A) Set the level for each load X (1-5) respectively in Group 2.
+
+  - Group3_PosX_Load_Full_On             (D) Used to turn each load X (1-5) respectively on to 100% in Group 3.
+  - Group3_PosX_Load_Raise               (D) Used to increase each load X (1-5) respectively in Group 3.
+  - Group3_PosX_Load_Lower               (D) Used to decrease each load X (1-5) respectively in Group 3.
+  - Group3_PosX_Load_Full_Off            (D) Used to turn off each load X (1-5) respectively in Group 3.
+  - Group3_PosX_Load_Set_Level           (A) Set the level for each load X (1-5) respectively in Group 3.
+
+  - Group4_PosX_Load_Full_On             (D) Used to turn each load X (1-5) respectively on to 100% in Group 4.
+  - Group4_PosX_Load_Raise               (D) Used to increase each load X (1-5) respectively in Group 4.
+  - Group4_PosX_Load_Lower               (D) Used to decrease each load X (1-5) respectively in Group 4.
+  - Group4_PosX_Load_Full_Off            (D) Used to turn off each load X (1-5) respectively in Group 4.
+  - Group4_PosX_Load_Set_Level           (A) Set the level for each load X (1-5) respectively in Group 4.
+
+  - Group5_PosX_Load_Full_On             (D) Used to turn each load X (1-5) respectively on to 100% in Group 5.
+  - Group5_PosX_Load_Raise               (D) Used to increase each load X (1-5) respectively in Group 5.
+  - Group5_PosX_Load_Lower               (D) Used to decrease each load X (1-5) respectively in Group 5.
+  - Group5_PosX_Load_Full_Off            (D) Used to turn off each load X (1-5) respectively in Group 5.
+  - Group5_PosX_Load_Set_Level           (A) Set the level for each load X (1-5) respectively in Group 5.
+
+    The following outputs apply to lighting scenes. The "Presses" are typically tied to RSDs.
+  - SceneX_Virtual_Press                 (D) Used to execute custom scene 1-4 respectively for a room. When held
+                                          for "scene store hold time" the scene stored fb is then pulsed high.
+  - SceneAllOn_Virtual_Press             (D) Used to execute scene All On for a room.
+  - SceneAllOff_Virtual_Press            (D) Used to execute scene All Off for a room.
+  - SceneRaise_Virtual_Press             (D) Used to execute scene All Raise for a room.
+  - SceneLower_Virtual_Press             (D) Used to execute scene All Lower for a room.
+  - SceneX_Name$                         (S) Name for custom scene 1-4 respectively for a room.
+  - Scene_was_Stored_Fb                  (D) Used to indicate a custom scene has been updated and was stored. SceneX_Select 
+                                          must be held for the "scene store hold time" before this signal is driven high.
+
+
+  PARAMETER Description
+  ---------------------
+  - Number of Groups + 1                  Determines how many of the groups are in use. Default value is 2d which respresents
+                                          one group. Range is 2d to 6d.
+
+    The following parameters apply to each group (1-5).  There is a set per group.
+  - GroupX Count                          Determines how many loads are present in group X.  Range is 0d to 5d.
+  - GroupX Pos1 Name                      Name of first load in group X.
+  - GroupX Pos2 Name                      Name of second load in group X.
+  - GroupX Pos3 Name                      Name of third load in group X.
+  - GroupX Pos4 Name                      Name of fourth load in group X.
+  - GroupX Pos5 Name                      Name of fifth load in group X.
+
+    The following parameters apply to lighting scenes.
+  - SceneX Name                           Name of each custom scene 1-4 respectively.
+  - Scene Store Hold Time                 Number of seconds SceneX_Select must be held before being stored.
+                                          Default is 6 seconds.
+
+
